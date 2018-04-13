@@ -1,11 +1,5 @@
-{{ item.name }}
-<input ng-model="change.name" ng-show="edit" />
-<button ng-click="toggleEdit()" ng-show="edit">Cancel</button>
-<button ng-click="toggleEdit()" ng-show="!edit"> Edit</button>
-
-{{
-    change
-}}
-{{
-    item
-}}
+<a ng-click='toggleEdit()'>{{ item.name }}</a>
+<button ng-click="toggleEdit()" ng-show="!canEdit()"> Edit</button>
+<input ng-model="change.name" ng-show="canEdit()" name="item.name"/>
+<button ng-click="toggleEdit()" ng-show="canEdit()">Cancel</button>
+<button ng-click="delete()" >Delete </button>

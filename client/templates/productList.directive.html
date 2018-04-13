@@ -1,8 +1,15 @@
 <h4>Product List</h4>
+<form name="form">
 <ul>
     <li ng-repeat="product in products">
        <product-item item="product"></product-item>
     </li>
 </ul>
+</form>
+<div ng-show="true">
+    <button ng-click='save()'>Submit</button>
+    <button ng-click='cancel()'>Cancel</button>
+</div>
 
-<product-item item="products[0]"></product-item>
+<input ng-model="newProduct" />
+<button ng-click="submit()"> Add Product </button>

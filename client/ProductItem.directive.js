@@ -1,30 +1,37 @@
 app.directive('productItem', function(){
     // Runs during compile
     return {
-        // name: '',
-        // priority: 1,
-        // terminal: true,
         scope: {
             item: '=item',
-        }, // {} = isolate, true = child, false/undefined = no change
-        controller: function($scope, $element, $attrs, $transclude) {
+        },
+        controller: function($scope, ProductService) {
             $scope.change = {};
+            $scope.canEdit = () => $scope.edit;
+            $scope.isDifferent = () => $scope.item.name !== $scope.change.name;
             $scope.toggleEdit = () => {
                 $scope.edit = !$scope.edit;
-                if(!$scope.edit){
-                    $scope.change = {};
-                }
+                $scope.change.name = $scope.item.name;
             }
-        },
-        // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-        // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-        // template: '',
-        templateUrl: '/client/templates/productItem.directive.html',
-        // replace: true,
-        // transclude: true,
-        // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-        link: function($scope, iElm, iAttrs, controller) {
+            $scope.delete = () => {
+                console.log($scope.item);
+                ProductService.deleteProduct($scope.item.id);
+            }
 
-        }
+            $scope.$on('cancel', function() {
+                $scope.edit = false;
+            })
+
+            $scope.$on('save', function(){
+                if ($scope.edit){
+                   const newProduct = {
+                     id: $scope.item.id,
+                     name: $scope.change.name,
+                   }
+                   ProductService.modifyProduct(newProduct)
+                   $scope.edit = false;
+                }
+            })
+        },
+        templateUrl: '/client/templates/productItem.directive.html',
     };
 });

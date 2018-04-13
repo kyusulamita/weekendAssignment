@@ -11,18 +11,23 @@ app.service('ProductService', function($http){
 	}
 
 	const deleteProduct = (id) => {
-		// angular.copy
-		let newArr = products.filter(product => product.id === id);
+		let newArr = products.filter(product => product.id !== id);
 		angular.copy(newArr, products);
 	}
 
 	const modifyProduct = (changes) => {
 		let newArr = products.map(product => product.id !== changes.id ? product : {...product, ...changes});
-		angualar.copy(newArr, products)
+		angular.copy(newArr, products)
+	}
+	const addProduct = (name) => {
+		products.push({ name, id: products.length + 1 });
 	}
 
 	return {
 		products,
 		fetchProducts,
+		deleteProduct,
+		modifyProduct,
+		addProduct,
 	}
 });
