@@ -1,0 +1,11 @@
+{{ item.name }}
+<input ng-model="change.name" ng-show="edit" />
+<button ng-click="toggleEdit()" ng-show="edit">Cancel</button>
+<button ng-click="toggleEdit()" ng-show="!edit"> Edit</button>
+
+{{
+    change
+}}
+{{
+    item
+}}
