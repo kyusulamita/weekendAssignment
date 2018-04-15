@@ -1,26 +1,43 @@
 app.service('ProductService', function($http){
-	const products = [
-		{id: 1, name: 'Hair Spray'},
-		{id: 2, name: 'Shampoo'},
-		{id: 3, name: 'Conditioner' },
-	];
+	const products = [];
 
 	// once backend is plugged in we'll be fetching these
 	const fetchProducts = () => {
-		return Promise.resolve(products);
+		return $http.get('/api/products')
+						.then(res => res.data)
+						.then(_products => {
+							angular.copy(_products, products)
+						})
+						.catch(err => console.log(err));
 	}
 
 	const deleteProduct = (id) => {
-		let newArr = products.filter(product => product.id !== id);
-		angular.copy(newArr, products);
+		return $http.delete(`/api/products/${id}`)
+		.then(res => res.data)
+		.then(() => {
+			let newArr = products.filter(product => product.id !== id);
+			angular.copy(newArr, products)
+		})
+		.catch(err => console.log(err));
 	}
 
 	const modifyProduct = (changes) => {
-		let newArr = products.map(product => product.id !== changes.id ? product : {...product, ...changes});
-		angular.copy(newArr, products)
+		return $http.put(`/api/products/${changes.id}`, changes)
+		.then(res => res.data)
+		.then((_changes) => {
+			let newArr = products.map(product => product.id !== changes.id ? product : {...product, ..._changes});
+			angular.copy(newArr, products)
+		})
+		.catch(err => console.log(err));
 	}
+
 	const addProduct = (name) => {
-		products.push({ name, id: products.length + 1 });
+		return $http.post('/api/products/', { name })
+		.then(res => res.data)
+		.then(_product => {
+			products.push(_product);
+		})
+		.catch(err => console.log(err));
 	}
 
 	return {
@@ -30,4 +47,7 @@ app.service('ProductService', function($http){
 		modifyProduct,
 		addProduct,
 	}
-});
+})
+.run(function(ProductService){
+	ProductService.fetchProducts();
+})

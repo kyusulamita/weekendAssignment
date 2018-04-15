@@ -4,14 +4,18 @@
 	<title>Take Home Assignment</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.js'></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/client/app.js"></script>
     <script src='/client/ProductList.directive.js'></script>
     <script src='/client/ProductItem.directive.js'></script>
     <script src='/client/ProductService.js'></script>
 </head>
 <body ng-app='weekend'>
-	<h1>Products and editing</h1>
-    <product-list></product-list>
-    <product-list></product-list>
+    <div class="container">
+        <nav-bar></nav-bar>
+        <div ui-view></div>
+    </div>
 </body>
 </html>

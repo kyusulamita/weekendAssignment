@@ -1,0 +1,3 @@
+app.directive('navBar', function(){
+
+})

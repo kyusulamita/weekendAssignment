@@ -6,6 +6,7 @@ app.directive('productItem', function(){
         },
         controller: function($scope, ProductService) {
             $scope.change = {};
+            $scope.change.name = $scope.item.name;
             $scope.canEdit = () => $scope.edit;
             $scope.isDifferent = () => $scope.item.name !== $scope.change.name;
             $scope.toggleEdit = () => {
@@ -13,12 +14,13 @@ app.directive('productItem', function(){
                 $scope.change.name = $scope.item.name;
             }
             $scope.delete = () => {
-                console.log($scope.item);
                 ProductService.deleteProduct($scope.item.id);
             }
 
             $scope.$on('cancel', function() {
-                $scope.edit = false;
+                if ($scope.edit){
+                    $scope.toggleEdit();
+                }
             })
 
             $scope.$on('save', function(){
@@ -28,8 +30,12 @@ app.directive('productItem', function(){
                      name: $scope.change.name,
                    }
                    ProductService.modifyProduct(newProduct)
-                   $scope.edit = false;
+                   $scope.toggleEdit();
                 }
+            })
+
+            $scope.$on('checkStatus', function(){
+                $scope.$emit('change', $scope.isDifferent() );
             })
         },
         templateUrl: '/client/templates/productItem.directive.html',
