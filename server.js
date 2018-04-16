@@ -6,4 +6,4 @@ const port = process.env.PORT || 1337;
 
 server.listen(port, ()=> console.log(`listening on port ${port}`));
 
-// db.syncAndSeed();
+db.syncAndSeed();

@@ -6,14 +6,14 @@ const Player = require('./Player')
 
 // Player.hasMany(Pokemon);
 
-// const syncAndSeed = ()=> {
-//   return conn.sync({ force: true })
-//     .then(()=> require('./seed')());
-// };
+const syncAndSeed = ()=> {
+  return conn.sync({ force: true })
+    .then(()=> require('./seed')());
+};
 
 
 module.exports = {
-  // syncAndSeed,
+  syncAndSeed,
   models: {
     Product,
     Player
